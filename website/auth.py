@@ -7,7 +7,8 @@ from flask_login import login_required, login_user, logout_user, current_user
 
 auth = Blueprint('auth', __name__)
 
-@auth.route('/login', methods=["GET","POST"])
+
+@auth.route('/login', methods=["GET", "POST"])
 def login():
     if request.method == 'POST':
         email = request.form.get('email')
@@ -20,11 +21,11 @@ def login():
                 login_user(user, remember=True)
                 return redirect(url_for('views.home'))
             else:
-                flash('Falsches Passwort!',category='error')
+                flash('Falsches Passwort!', category='error')
         else:
-            flash('E-Mail existiert nicht!', category='error')
-        
-    return render_template("accounts/login.html", user = current_user)
+            flash('E-Mail existiert nicht!', category='error')        
+    return render_template("accounts/login.html", user=current_user)
+
 
 @auth.route('/logout')
 @login_required
@@ -52,7 +53,12 @@ def sign_up():
         elif len(password1) < 7:
             flash('Passwort muss mehr als 7 Buchstaben enthalten', category='error')
         else:
-            new_user = User(email=email, first_name=first_name, password=generate_password_hash(password1, method='sha256'))
+            new_user = User(
+                email=email,
+                first_name=first_name,
+                password=generate_password_hash(
+                    password1, method='pbkdf2:sha256', salt_length=16)
+            )
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user, remember=True)
