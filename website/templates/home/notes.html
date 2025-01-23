@@ -1,0 +1,33 @@
+{%extends "layout/base.html" %} 
+{%block title %}Notizen{% endblock %}
+
+{% block content %}
+<div class="bg-text">
+    <h1>Notizen</h1>
+    <p id="home-text">Schreibe hier deine Notizen auf.</p>
+</div>
+<body class="home-bg-image-blur"></body>
+<ul class ="list-group list-group-flush" id = "notes">
+    {% for note in user.notes %}
+    <br>   
+    <li class ="list-group-item">
+        <p id="note_date">{{note.date}}</p> 
+        <p id="note_data">{{note.data}}</p>
+        <button type ="button" class="close" onClick= "deleteNote( '{{ note.id }}' )">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </li>
+    {% endfor %}
+</ul>
+<form method ="POST">
+    <br />
+    <div align ="center">
+    <textarea name = "note" id = "note" class = "formcontrol" rows ="3" cols="150"></textarea>
+    </div>
+    <br />
+    <div align="center">
+        <button type="submit" class ="btn btn-primary">Notiz hinzufügen</button>
+    </div>
+</form>
+<div class="padding"></div>
+{% endblock %}

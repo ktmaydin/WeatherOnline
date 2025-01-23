@@ -1,0 +1,27 @@
+{%extends "layout/base.html" %} 
+{%block title %}Wetter{% endblock %}
+
+{% block content %}
+  <body class="home-bg-image"></body>
+  <body>
+    <div class="bg-text">
+      <h1>Wetterdaten</h1>
+      <form action="/weather" method="post" align="center">
+        <label id="home-text" for="continent">Wählen Sie ihr Zielkontinent aus:</label>
+          <br>
+        <select class="form-select" name="continent" id="continent">
+          <option value="europa">Europa</option>
+          <option value="asien">Asien</option>
+          <option value="afrika">Afrika</option>
+          <option value="nordamerika">Nordamerika</option>
+          <option value="suedamerika">Südamerika</option>
+          <option value="australien">Australien</option>
+        </select>
+        <br>
+        <div class="padding"></div>
+        <input type="submit" class="btn btn-primary" value="Suchen">
+      </form>
+    </div>
+  </body>
+</html>
+{% endblock %}

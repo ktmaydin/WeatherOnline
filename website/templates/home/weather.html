@@ -1,0 +1,42 @@
+{%extends "layout/base.html" %} 
+{%block title %}Wetter Empfehlungen{% endblock %}
+<head>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+{% block content %}
+<body class="home-bg-image-blur"></body>
+<div class="bg-text">
+  <h3>Wetter Empfehlungen</h3>
+  <p id="home-text">
+    Das ist unsere aktuelle Urlaubsempfehlung für {{ continent }}.<br>
+    Die Städte sind nach ihrer aktuellen Temperatur, absteigend aufgelistet.<br>
+    Klicke für mehr Informationen auf den Pfeil in der Kachel!
+  </p>
+</div>
+<div class="padding"></div>
+<div class="kachel-container" id="weather_grid_item">
+  {% for city, temperature in temperatures.items() %}
+    <div class="kachel" id="{{ city }}">
+      <h3 name="city" id="city_kachel_name">{{ city }}</h3>
+        <div class="wettericon">
+          <img src="{{temperature[7]}}">
+        </div>
+      <p id="temp_in_kachel" align="center">{{ temperature[0] }}°C</p>
+      <img src="../static/images/plus-circle.svg"  class="icon inline-block" onclick="addToFavorites('{{city}}')">
+      <img src="../static/images/arrow-down-square.svg" class="icon inline-block" onclick="var erweiterteInformationen = this.parentNode.querySelector('.erweiterte-informationen'); if (erweiterteInformationen.classList.contains('angezeigt')) { erweiterteInformationen.classList.remove('angezeigt'); } else { erweiterteInformationen.classList.add('angezeigt'); }">
+      <div class="erweiterte-informationen">
+        <p align="center" id="city_kachel_details">Mehr Informationen zur Stadt <b>{{ city }}</b>:<br>
+        Temperatur Max:&ensp;<b>{{temperature[2]}}&deg;C</b> <br>
+        Temperatur Min:&ensp;<b>{{temperature[1]}}&deg;C</b> <br>
+        Gefühlte wie:&emsp;<b>{{temperature[3]}}&deg;C</b><br>
+        Luftfeuchtigkeit:&ensp;<b>{{temperature[5]}}%</b><br>
+        Wetter:&nbsp;<b>{{temperature[6]}}</b><br>
+        <b>{{temperature[4]}}%</b> bewölkt <br>
+        </p>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+<div class="padding"></div>
+{% endblock %}
