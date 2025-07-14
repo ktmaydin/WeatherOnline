@@ -30,7 +30,7 @@ def notes_view():
             flash('Notiz ist zu kurz!', category = 'error')
         else: 
             now_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            now = datetime.datetime.now().strptime(now_str, "%Y-%m-%d %H:%M:%S")
+            now = datetime.datetime.strptime(now_str, "%Y-%m-%d %H:%M:%S")
             
             new_note = Note(data=note, date=now, user_id=current_user.id)
             db.session.add(new_note)
